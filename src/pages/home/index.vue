@@ -154,20 +154,24 @@
             background-color: $bg-color;
             padding: 15px 0;
             nav{
-                height: 48px;
-                line-height: 48px;
+                height: 60px;
+                line-height: 60px;
                 display: flex;
+                background-color: $border-color;
+                border-radius: $border-radius-base $border-radius-base 0 0;
                 .tab-item{
                     flex: 1;
-                    font-size: 16px;
+                    font-size: 18px;
                     text-align: center;
                     cursor: pointer;
                     transition: all .3s;
+                    border-radius: $border-radius-base $border-radius-base 0 0;
                     .text{
                         margin-left: 5px;
                         color: $color-primary;
                     }
                     i{
+                        font-size: 18px;
                         color: $color-primary;
                     }
                     &.active{
@@ -185,6 +189,7 @@
                 height: 320px;
                 padding: 15px;
                 border: 1px solid $border-color;
+                border-top: none;
                 .content{
                     transition: all .3s;
                     .item{
@@ -196,6 +201,7 @@
                         i{
                             font-size: 60px;
                             transition: all .3s;
+                            color: $text-color-grey;
                         }
                         .title{
                             line-height: 32px;

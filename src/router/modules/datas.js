@@ -8,8 +8,11 @@ export default {
             redirect: "/datas/list"
         },
         {
-            path: "/datas/list",
+            path: "/datas/list/:id",
             name: "datas-list",
+            query: {
+                id: 0
+            },
             component: () => import("@/pages/datas/list"),
         },
         {

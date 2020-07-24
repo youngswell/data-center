@@ -10,10 +10,13 @@ export default {
         {
             path: "/datas/list/:id",
             name: "datas-list",
-            query: {
-                id: 0
-            },
             component: () => import("@/pages/datas/list"),
+            children: [
+                {
+                    path: "/datas/list",
+                    redirect: "/datas/list/0"
+                },
+            ]
         },
         {
             path: "/datas/API",

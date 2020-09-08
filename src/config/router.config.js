@@ -1,15 +1,15 @@
-// @name: home.js
+// @name: router.config.js
 // @description:
 //   is: 项目路由入口文件;
 //   do: 1.定义路由守卫方法；
 // @author: yanglang
-// @date: 2020/6/10 15:00
+// @date: 2020/8/25 15:00
 
 import Store from "../store"
 // import { MessageBox } from 'element-ui';
 
 const beforeEach = (to, from, next) => {
-    console.log(to,document.title)
+    // console.log(to,document.title)
     if (to.meta.title) {
         let title = ""
         if (to.matched.length) {

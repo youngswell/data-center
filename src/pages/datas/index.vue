@@ -1,28 +1,23 @@
 <template>
-    <layout>
-        <layout-header slot="header"></layout-header>
-        <router-view slot="page"></router-view>
-    </layout>
+    <router-view slot="page"></router-view>
 </template>
 
 <script>
-    import layout from "@/layout";
-    import Header from "@/components/layout-header"
-    export default {
-        name: "datas",
-        components: {
-            "layout": layout,
-            "layout-header": Header,
-        },
-        data() {
-            return {
 
-            }
-        },
-        mounted() {
-            console.log(this.$route)
+export default {
+    name: "datas",
+    components: {
+
+    },
+    data() {
+        return {
+
         }
+    },
+    mounted() {
+
     }
+}
 </script>
 
 <style lang="scss" scoped>

@@ -14,8 +14,9 @@
         </template>
         <template v-else>
             <el-button type="primary" @click="login">登录</el-button>
-            <el-button type="default">注册</el-button>
+<!--            <el-button type="default">注册</el-button>-->
         </template>
+
     </div>
 </template>
 
@@ -26,33 +27,42 @@
         Dropdown,
         DropdownMenu,
         DropdownItem,
-    } from "element-ui"
-    import loading from "@/utils/loading";
+    } from 'element-ui'
     export default {
-        name: "user",
+        name: 'user',
         components: {
-            "el-avatar": Avatar,
-            "el-button": Button,
-            "el-dropdown": Dropdown,
-            "el-dropdown-item": DropdownItem,
-            "el-dropdown-menu": DropdownMenu,
+            [Avatar.name]: Avatar,
+            [Button.name]: Button,
+            [Dropdown.name]: Dropdown,
+            [DropdownItem.name]: DropdownItem,
+            [DropdownMenu.name]: DropdownMenu,
         },
         methods: {
             logout() {
-                this.$confirm("确认退出登录？","",{}).then(() => {
-                    this.$store.dispatch("logout");
+                this.$confirm('确认退出登录？','',{}).then(() => {
+                    this.$store.dispatch('logout');
                 })
             },
             login() {
-                loading({ text: "登录中..." },2000).then(() => {
-                    this.$message.success("登录成功！")
-                    this.$store.commit("user", {id:0,real_name: "Tony"})
+                const loading = this.$loading('登录中...');
+                this.$api.base.login({
+                    appKey: 'gyjlykj',
+                    appSecret: 'f16610f5b44a27a56cc5bc8e8e2f16',
+                }).then(({ token }) => {
+                    // console.log(token)
+                    if (token) {
+                        this.$store.commit("user", { id: 0, real_name: 'Admin'});
+                        this.$store.commit("token", token);
+                        this.$message.success('登录成功！')
+                    }
+                }).finally(() => {
+                    loading.close()
                 })
             },
             handleCommand(command) {
                 switch (command) {
-                    case "logout": this.logout(); break;
-                    case "viewUserInfo": this.$message.info("查看用户信息"); break;
+                    case 'logout': this.logout(); break;
+                    case 'viewUserInfo': this.$message.info('查看用户信息'); break;
                     default:  break;
                 }
             }

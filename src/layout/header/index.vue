@@ -7,12 +7,19 @@
                  :default-active="activeIndex"
                  mode="horizontal"
                  @select="handleSelect">
-            <el-menu-item index="/home">首页</el-menu-item>
-            <el-submenu index="/datas">
-                <template slot="title">DATA</template>
-                <el-menu-item index="/datas/list">数据目录</el-menu-item>
-                <el-menu-item index="/datas/API">API</el-menu-item>
-            </el-submenu>
+            <template v-for="item in routers">
+                <template v-if="item.children">
+                    <el-submenu :index="item.path" :key="item.path">
+                        <template slot="title">{{ item.meta.title }}</template>
+                        <template v-for="v in item.children">
+                            <el-menu-item :index="v.path" :key="v.path" v-if="!v.redirect">{{ v.meta.title }}</el-menu-item>
+                        </template>
+                    </el-submenu>
+                </template>
+                <template v-else>
+                    <el-menu-item :index="item.path" :key="item.path" v-if="!item.redirect">{{ item.meta.title }}</el-menu-item>
+                </template>
+            </template>
         </el-menu>
         <user></user>
     </div>
@@ -24,9 +31,10 @@
         MenuItem,
         Submenu,
     } from "element-ui"
-    import Logo from "@/components/layout-header/logo"
-    import breadcrumb from "@/components/layout-header/breadcrumb"
-    import user from "@/components/layout-header/user"
+    import Logo from "./logo"
+    import breadcrumb from "./breadcrumb"
+    import user from "./user"
+    import { routers } from "@/router"
     export default {
         name: "layout-header",
         components: {
@@ -55,8 +63,21 @@
         },
         data() {
             return {
-                // activeIndex: "1"
+                // activeIndex: '',
+                routers,
             }
+        },
+        created() {
+            let i = 0;
+            // console.log(this.routers)
+            for (i in this.routers) {
+                if (this.routers[i].name === "home") {
+                    break;
+                }
+            }
+            const temp = JSON.parse(JSON.stringify(this.routers[i]));
+            this.routers.splice(i,1);
+            this.routers.unshift(temp);
         },
         computed: {
             activeIndex() {
@@ -64,8 +85,8 @@
             }
         },
         methods: {
-            handleSelect(e) {
-                console.log(e)
+            handleSelect() {
+                // console.log(e)
             }
         }
     }

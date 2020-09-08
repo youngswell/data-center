@@ -1,4 +1,4 @@
-import list from "./modules/index";
+import routers from "./modules/index";
 import Vue from "vue";
 import Router from "vue-router";
 import { beforeEach, afterEach } from "@/config/router.config"
@@ -15,19 +15,40 @@ Router.prototype.push = function push(location) {
 const router = new Router({
     mode: "history",
     routes: [
-        ...list,
         {
-            path: "/",
-            redirect: "/home"
+            path: '/',
+            meta: {
+                title: "APP管理平台"
+            },
+            component: () => import("@/layout"),
+            children: [
+                {
+                    path: "/",
+                    redirect: "/home"
+                },
+                ...routers
+            ]
         },
         {
             path: "/error",
+            meta: {
+                title: "404找不到页面"
+            },
             component: () => import("@/pages/error"),
+        },
+        {
+            path: "/login",
+            meta: {
+                title: "登录"
+            },
+            component: () => import("@/pages/login"),
         }
     ]
 })
 
-router.beforeEach = beforeEach
-router.afterEach = afterEach
+router.beforeEach(beforeEach)
+router.afterEach(afterEach)
+
+export { routers }
 
 export default router

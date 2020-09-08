@@ -1,7 +1,7 @@
 <template>
     <div class="logo">
-        <img src="../../assets/image/logo.png" height="32" alt="">
-        <img v-if="showText" class="text" src="../../assets/image/data-center.png" height="32" alt="">
+        <img src="../../assets/image/logo.png" height="42" alt="">
+        <img v-if="showText" class="text" src="../../assets/image/text.png" height="42" alt="">
     </div>
 </template>
 

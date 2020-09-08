@@ -285,20 +285,20 @@
   .el-message--info .el-message__content {
     color: #909399; }
   .el-message--success {
-    background-color: #ebfceb;
-    border-color: #d6f8d6; }
+    background-color: #eaf7eb;
+    border-color: #d6efd7; }
     .el-message--success .el-message__content {
-      color: #33dd33; }
+      color: #31AD35; }
   .el-message--warning {
-    background-color: #f5f0eb;
-    border-color: #ebe0d6; }
+    background-color: #fef5e6;
+    border-color: #fcebcc; }
     .el-message--warning .el-message__content {
-      color: #996633; }
+      color: #F29A00; }
   .el-message--error {
-    background-color: #fce8e9;
-    border-color: #fad1d2; }
+    background-color: #ffeaed;
+    border-color: #fed5db; }
     .el-message--error .el-message__content {
-      color: #E51720; }
+      color: #FC2B4A; }
   .el-message__icon {
     margin-right: 10px; }
   .el-message__content {
@@ -321,13 +321,13 @@
     .el-message__closeBtn:hover {
       color: #909399; }
   .el-message .el-icon-success {
-    color: #33dd33; }
+    color: #31AD35; }
   .el-message .el-icon-error {
-    color: #E51720; }
+    color: #FC2B4A; }
   .el-message .el-icon-info {
     color: #909399; }
   .el-message .el-icon-warning {
-    color: #996633; }
+    color: #F29A00; }
 
 .el-message-fade-enter,
 .el-message-fade-leave-active {

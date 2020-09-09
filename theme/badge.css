@@ -253,7 +253,7 @@
   vertical-align: middle;
   display: inline-block; }
   .el-badge__content {
-    background-color: #E51720;
+    background-color: #FC2B4A;
     border-radius: 10px;
     color: #FFFFFF;
     display: inline-block;
@@ -279,12 +279,12 @@
       right: 0;
       border-radius: 50%; }
     .el-badge__content--primary {
-      background-color: #26266D; }
+      background-color: #286fa7; }
     .el-badge__content--success {
-      background-color: #33dd33; }
+      background-color: #31AD35; }
     .el-badge__content--warning {
-      background-color: #996633; }
+      background-color: #F29A00; }
     .el-badge__content--info {
       background-color: #909399; }
     .el-badge__content--danger {
-      background-color: #E51720; }
+      background-color: #FC2B4A; }

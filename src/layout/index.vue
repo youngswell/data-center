@@ -1,20 +1,33 @@
 <template>
     <div class="layout">
         <div class="header" :class="{'float': scrollTop > 10}">
-            <slot name="header"></slot>
+            <slot name="header">
+                <layout-header></layout-header>
+            </slot>
         </div>
         <div class="main">
             <vue-scroll :ops="ops" @handle-scroll="scroll">
-                <slot name="page"></slot>
+                <div class="router-container">
+                    <slot name="page">
+                        <transition name="fade" mode="in-out">
+                            <keep-alive>
+                                <router-view></router-view>
+                            </keep-alive>
+                        </transition>
+                    </slot>
+                </div>
             </vue-scroll>
         </div>
     </div>
 </template>
 
 <script>
+    import layoutHeader from "./header"
     export default {
         name: "layout",
-        components: {},
+        components: {
+            [layoutHeader.name]: layoutHeader,
+        },
         data() {
             return {
                 ops: {
@@ -31,22 +44,28 @@
     }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "@/common/style/theme.scss";
 .layout{
     height: 100%;
     display: flex;
     flex-direction: column;
-    .header{
+    & > .header{
         .float{
             position: relative;
             z-index: 10;
             box-shadow: 5px 0 10px transparentize($box-shadow-color,.2);
         }
     }
-    .main{
+    & > .main{
         flex: 1;
         overflow: hidden;
+        .router-container{
+            padding: $space-row-base $space-col-base;
+            .page{
+
+            }
+        }
     }
 }
 </style>

@@ -1,12 +1,19 @@
 import axios from "@/config/api.config"
 
-const path = "/home/Activity"
-
 export default {
     upload(url,form) {
-        return axios.post(path + "/upload-file",form, null)
+        return axios.post(url || "/version/upload", form, null)
+    },
+    download(id) {
+        return axios.get("/version/download?fileId=" + id)
     },
     login(data) {
-        return axios.post(path + "/login",data, null)
+        return axios.get("/auth/token", { params: data })
     },
+    enums(planform) {
+        return axios.get('/enum/items', { params: { enumCodes: planform } })
+    },
+    any() {
+        return axios.get('/any')
+    }
 }

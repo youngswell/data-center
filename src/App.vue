@@ -9,12 +9,39 @@
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'App',
   components: {
 
+  },
+  computed: {
+    lognStatus() {
+      return !!this.$store.getters.token
+    }
+  },
+  watch: {
+    lognStatus() {
+      // console.log(lognd)
+      // this.$router.replace({ query: this.$route.query })
+      window.location.replace(this.$route.fullPath)
+    }
+  },
+  mounted() {
+    window.addEventListener('resize', this.resizeHandler)
+    this.resizeHandler()
+  },
+  destroyed() {
+    window.removeEventListener('resize', this.resizeHandler)
+  },
+  methods: {
+    resizeHandler() {
+      const clientHeight = document.querySelector('body').clientHeight;
+      const clientWidth = document.querySelector('body').clientWidth;
+      const system = this.$store.getters.system;
+      this.$store.commit('system', { ...system, clientHeight, clientWidth })
+      // console.log(system, this.$store.getters.system)
+    }
   }
 }
 </script>
@@ -23,18 +50,19 @@ export default {
 @import "@/common/style/theme.scss";
 @font-face {
   font-family: 'jly-data';  /* project id 1959723 */
-  src: url('//at.alicdn.com/t/font_1959723_lb7kkzj9hi.eot');
-  src: url('//at.alicdn.com/t/font_1959723_lb7kkzj9hi.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_1959723_lb7kkzj9hi.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_1959723_lb7kkzj9hi.woff') format('woff'),
-  url('//at.alicdn.com/t/font_1959723_lb7kkzj9hi.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_1959723_lb7kkzj9hi.svg#jly-data') format('svg');
+  src: url('//at.alicdn.com/t/font_1959723_jw29qhm7epq.eot');
+  src: url('//at.alicdn.com/t/font_1959723_jw29qhm7epq.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_1959723_jw29qhm7epq.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_1959723_jw29qhm7epq.woff') format('woff'),
+  url('//at.alicdn.com/t/font_1959723_jw29qhm7epq.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_1959723_jw29qhm7epq.svg#jly-data') format('svg');
 }
 .jly-data-icon{
   font-family: jly-data;
   font-size: 16px;
   color: $text-color-content;
 }
+
 html,body,#app{
   height: 100%;
   background-color: #EFF3F7;

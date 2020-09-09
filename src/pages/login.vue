@@ -4,7 +4,7 @@
             <el-form :rules="rules" :model="formData" ref="loginForm">
                 <el-form-item align="center">
                     <img src="../assets/image/logo.png" height="42" style="margin-right: 15px">
-                    <img src="../assets/image/data-center.png" height="42">
+<!--                    <img src="../assets/image/text.png" height="42">-->
                 </el-form-item>
                 <el-form-item prop="name">
                     <el-input placeholder="请输入账户名" v-model="formData.name">

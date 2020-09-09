@@ -10,16 +10,17 @@ import Store from "../store"
 
 const beforeEach = (to, from, next) => {
     // console.log(to,document.title)
-    if (to.meta.title) {
-        let title = ""
-        if (to.matched.length) {
-            to.matched.forEach((item,key) => {
-                if (key > 0 && key < to.matched.length) title += " - ";
-                title += item.meta.title;
-            })
-        }
-        document.title = title
+    // if (to.meta.title) {
+    //
+    // }
+    let title = ""
+    if (to.matched.length) {
+        to.matched.forEach((item,key) => {
+            if (key > 0 && key < to.matched.length) title += " - ";
+            title += item.meta.title;
+        })
     }
+    document.title = title
     if (to.query.token) {
         Store.commit("token",to.query.token)
     }

@@ -1,41 +1,27 @@
 <template>
     <el-container class="catalog">
-        <el-aside width="220px" :style="{ height: height + 'px' }">
-            <div class="search-box">
-                <el-input type="text" v-model="keyword" placeholder="输入关键字以检索..." clearable></el-input>
-            </div>
-            <vue-scroll :ops="ops">
-                <el-menu :default-active="'/resource/catalog/'+defaultActiveId"
-                         :router="true"
-                         active-text-color="#ff6666"
-                         class="el-menu-vertical-demo">
-                    <el-submenu :index="'/resource/catalog/'+String(child.id)" v-for="(child, childIndex) in menus" :key="childIndex">
-                        <template slot="title">
-                            <!--                            <i class="el-icon-location"></i>-->
-                            <span>{{ child.label }}</span>
-                        </template>
-                        <template v-for="(grandson, grandsonIndex) in child.children">
-                            <template v-if="grandson.children">
-                                <el-submenu :index="'/resource/catalog/'+String(grandson.id)" :key="grandsonIndex">
-                                    <template slot="title">{{ grandson.label }}</template>
-                                    <el-menu-item :index="'/resource/catalog/'+String(greatGrandson.id)" v-for="(greatGrandson, greatGrandsonIndex) in grandson.children" :key="greatGrandsonIndex">{{ greatGrandson.label }}</el-menu-item>
-                                </el-submenu>
-                            </template>
-                            <template v-else>
-                                <el-menu-item :index="'/resource/catalog/'+String(grandson.id)" :key="grandsonIndex">{{ grandson.label }}</el-menu-item>
-                            </template>
-                        </template>
-                    </el-submenu>
-                </el-menu>
+        <el-aside width="320px" :style="{ height: height + 'px' }">
+<!--            <div class="search-box">-->
+<!--                <el-input type="text" v-model="keyword" placeholder="输入关键字以检索..." clearable></el-input>-->
+<!--            </div>-->
+            <vue-scroll :ops="ops" style="background-color: #ffffff;padding: 15px 0">
+                <el-tree ref="tree"
+                         :props="treeProps"
+                         :load="loadNode"
+                         :highlight-current="true"
+                         @node-click="nodeClick"
+                         lazy>
+                </el-tree>
             </vue-scroll>
         </el-aside>
         <el-main :style="{ height: height + 'px' }">
             <vue-scroll :ops="ops">
                 <div class="API-list">
                     <div class="api" v-for="(api, index) in list" :key="index">
-                        <div class="name">{{ api.name }}</div>
+                        <api-card @view="view" :data="api"></api-card>
                     </div>
                 </div>
+                <api-info ref="info"></api-info>
             </vue-scroll>
         </el-main>
     </el-container>
@@ -46,8 +32,10 @@ import {
     Aside, Main, Container,
     Menu, Submenu, MenuItem,
     Input,
+    Tree,
 } from 'element-ui';
-import list from "@/assets/json/categories.json";
+import ApiCard from '@/pages/public/api-card'
+import ApiInfo from '@/pages/public/api-info'
 export default {
     name: "catalog",
     components: {
@@ -58,51 +46,70 @@ export default {
         [Menu.name]: Menu,
         [Submenu.name]: Submenu,
         [MenuItem.name]: MenuItem,
+        [Tree.name]: Tree,
+        [ApiCard.name]: ApiCard,
+        [ApiInfo.name]: ApiInfo,
     },
     data() {
         return {
-            menus: list,
-            list: list,
+            list: [],
             keyword: "",
+            current: '',
             ops: {
                 bar: {
                     color: '#ccc'
                 }
+            },
+            treeProps: {
+                label: 'name',
+                children: 'zones',
+                isLeaf: 'isLeaf'
             }
         }
     },
     computed: {
-        defaultActiveId() {
-            return this.$route.params.id
-        },
         height() {
             return (this.$store.getters.system).clientHeight - 90
         },
     },
     watch: {
-        defaultActiveId: {
-            handler(id) {
-                // console.log(id)
-                this.list = this.getData(id)
-            },
-            immediate: true
-        }
+
     },
     mounted() {
-        // console.log(this.$route.params)
+        this.getApiList()
     },
     methods: {
-        getData(id) {
-            let list = []
-            let length = Math.round(Math.random()*100)
-            for (let i = 0; i < length; i++) {
-                list.push({
-                    id: id + i,
-                    name: "API-" + id + i
-                })
+        getApiList(id) {
+            const params = id ? { provider: id } : {}
+            this.$api.meta.getApiListByCategoryId(params).then(({ list }) => {
+                this.list = list
+            })
+        },
+        loadNode(node, resolve) {
+            // console.log(node)
+            if (node.level === 0) {
+                return resolve([{ name: '贵州铝厂有限责任公司' }]);
             }
-            // console.log(list)
-            return list
+            this.$api.unit.getUnit().then(({ list }) => {
+                list.forEach(item => {
+                    item.isLeaf = typeof item.isLeaf === 'undefined' ? true : item.isLeaf
+                })
+                resolve(list);
+            })
+        },
+        nodeClick(e) {
+            console.log(e)
+            this.getApiList(e.id)
+        },
+        view(id) {
+            const loading = this.$loading('加载中...');
+            Promise.all([
+                this.$api.meta.getApiInfoById(id).then(res => {
+                    this.$refs.info.open(res)
+                })
+            ]).then(() => {
+                loading.close()
+            })
         }
     }
 }
@@ -131,21 +138,7 @@ export default {
                 display: flex;
                 flex-wrap: wrap;
                 .api{
-                    $height: 100px;
-                    height: $height;
-                    line-height: $height;
-                    min-width: 120px;
                     margin: 0 15px 15px 0;
-                    text-align: center;
-                    cursor: pointer;
-                    padding: $space-row-base $space-col-base;
-                    border-radius: $border-radius-base;
-                    background-color: $bg-color;
-                    box-shadow: 5px 5px 10px transparentize($box-shadow-color,.2);
-                    transition: all .5s;
-                    &:hover{
-                        transform: scale(1.08);
-                    }
                 }
             }
         }

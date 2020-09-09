@@ -1,6 +1,6 @@
 <template>
     <div class="row-item">
-        <label :class="{'show-colon': showColon}" :style="{'width': (/px/.test(labelWidth) ? labelWidth : (labelWidth + 'px')), 'text-align': algin}">{{ label }}</label>
+        <label :class="{'show-colon': showColon}" :style="{'width': (/px/.test(labelWidth) ? labelWidth : /auto/.test(labelWidth) ? labelWidth : (labelWidth + 'px')), 'text-align': algin}">{{ label }}</label>
         <div class="row-content">
             <slot></slot>
         </div>

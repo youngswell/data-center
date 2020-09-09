@@ -1,7 +1,10 @@
 import axios from "@/config/api.config"
-const path = '/resource'
+const path = '/open/metadata'
 export default {
-    category() {
-        return axios.get(path + '/category')
+    getCategory() {
+        return axios.get(path + '/category/info')
+    },
+    getCategoryByPid(pid) {
+        return axios.get(path + '/category/child/' + pid)
     },
 }

@@ -10,7 +10,7 @@ module.exports = {
         // prot: 3000,
         proxy: {
             '/api': {
-                target: 'http://gj-test.jlykj.cn/api/',
+                target: 'http://139.159.210.185:9010/',
                 // pathRewrite: {'^/api' : '/api'},
                 //changeOrigin: true,     // target是域名的话，需要这个参数，
                 secure: false,          // 设置支持https协议的代理

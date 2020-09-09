@@ -21,10 +21,28 @@ export default {
             component: () => import('@/pages/resource/catalog'),
             children: [
                 {
+                    path: '/resource/catalog',
+                    redirect: '/resource/catalog/0'
+                },
+                {
                     path: '/resource/catalog/:id',
                     component: () => import('@/pages/resource/catalog/list'),
                 }
             ]
-        }
+        },
+        {
+            path: '/resource/interface',
+            name: 'resource-interface',
+            meta: {
+                title: 'API',
+                module: 'interface',
+            },
+            component: () => import('@/pages/resource/interface'),
+        },
+        {
+            path: '/resource/info/:id',
+            name: 'resource-info',
+            component: () => import('@/pages/resource/info'),
+        },
     ],
 }

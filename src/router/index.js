@@ -18,7 +18,7 @@ const router = new Router({
         {
             path: '/',
             meta: {
-                title: "APP管理平台"
+                title: "贵铝数据开放平台"
             },
             component: () => import("@/layout"),
             children: [

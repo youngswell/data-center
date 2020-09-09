@@ -12,12 +12,12 @@
                     <el-submenu :index="item.path" :key="item.path">
                         <template slot="title">{{ item.meta.title }}</template>
                         <template v-for="v in item.children">
-                            <el-menu-item :index="v.path" :key="v.path" v-if="!v.redirect">{{ v.meta.title }}</el-menu-item>
+                            <el-menu-item :index="v.path" :key="v.path" v-if="v.meta">{{ v.meta.title }}</el-menu-item>
                         </template>
                     </el-submenu>
                 </template>
                 <template v-else>
-                    <el-menu-item :index="item.path" :key="item.path" v-if="!item.redirect">{{ item.meta.title }}</el-menu-item>
+                    <el-menu-item :index="item.path" :key="item.path" v-if="item.meta">{{ item.meta.title }}</el-menu-item>
                 </template>
             </template>
         </el-menu>
@@ -67,6 +67,15 @@
                 routers,
             }
         },
+        computed: {
+            activeIndex() {
+                let path = this.$route.path.split('/');
+                path.splice(0,1);
+                path.splice(path.length - 1,1);
+                path = '/' + path.join('/')
+                return path
+            }
+        },
         created() {
             let i = 0;
             // console.log(this.routers)
@@ -78,11 +87,6 @@
             const temp = JSON.parse(JSON.stringify(this.routers[i]));
             this.routers.splice(i,1);
             this.routers.unshift(temp);
-        },
-        computed: {
-            activeIndex() {
-                return this.$route.path
-            }
         },
         methods: {
             handleSelect() {

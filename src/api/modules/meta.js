@@ -1,18 +1,21 @@
 import axios from "@/config/api.config"
 
-const path = "/metadata"
+const path = "/open/metadata"
 
 export default {
     category() {
         return axios.get(path + '/category/info')
     },
     getCategoryByPId(id) {
-        return axios.get(path + '/category/info/' + id)
+        return axios.get(path + '/category/child/' + id)
     },
-    add(data) {
-        return axios.post(path, data)
+    getApiListByCategoryId(params) {
+        return axios.get(path + '/info', { params: params })
     },
-    del(id) {
-        return axios.delete(path + id)
+    getApiInfoById(id) {
+        return axios.get(path + '/info/' + id)
+    },
+    getApiInfo(id) {
+        return axios.get(path + '/info/' + id)
     },
 }

@@ -50,12 +50,12 @@ export default {
 @import "@/common/style/theme.scss";
 @font-face {
   font-family: 'jly-data';  /* project id 1959723 */
-  src: url('//at.alicdn.com/t/font_1959723_j37jo2klwn8.eot');
-  src: url('//at.alicdn.com/t/font_1959723_j37jo2klwn8.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_1959723_j37jo2klwn8.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_1959723_j37jo2klwn8.woff') format('woff'),
-  url('//at.alicdn.com/t/font_1959723_j37jo2klwn8.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_1959723_j37jo2klwn8.svg#jly-data') format('svg');
+  src: url('//at.alicdn.com/t/font_1959723_48bv6dq0p55.eot');
+  src: url('//at.alicdn.com/t/font_1959723_48bv6dq0p55.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_1959723_48bv6dq0p55.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_1959723_48bv6dq0p55.woff') format('woff'),
+  url('//at.alicdn.com/t/font_1959723_48bv6dq0p55.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_1959723_48bv6dq0p55.svg#jly-data') format('svg');
 }
 .jly-data-icon{
   font-family: jly-data;

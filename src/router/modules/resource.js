@@ -19,16 +19,6 @@ export default {
                 module: 'catalog',
             },
             component: () => import('@/pages/resource/catalog'),
-            children: [
-                {
-                    path: '/resource/catalog',
-                    redirect: '/resource/catalog/0'
-                },
-                {
-                    path: '/resource/catalog/:id',
-                    component: () => import('@/pages/resource/catalog/list'),
-                }
-            ]
         },
         {
             path: '/resource/interface',

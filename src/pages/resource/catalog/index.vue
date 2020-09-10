@@ -21,6 +21,7 @@
                         <api-card @view="view" :data="api"></api-card>
                     </div>
                 </div>
+                <list-is-null v-if="list.length === 0"></list-is-null>
                 <api-info ref="info"></api-info>
             </vue-scroll>
         </el-main>
@@ -36,6 +37,7 @@ import {
 } from 'element-ui';
 import ApiCard from '@/pages/public/api-card'
 import ApiInfo from '@/pages/public/api-info'
+import ListIsNull from '@/components/list-is-null'
 export default {
     name: "catalog",
     components: {
@@ -49,6 +51,7 @@ export default {
         [Tree.name]: Tree,
         [ApiCard.name]: ApiCard,
         [ApiInfo.name]: ApiInfo,
+        [ListIsNull.name]: ListIsNull,
     },
     data() {
         return {

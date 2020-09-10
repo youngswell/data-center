@@ -1,5 +1,7 @@
 <template>
-    <el-dialog custom-class="api-info" :visible.sync="visible"
+    <el-dialog custom-class="api-info"
+               width="960px"
+               :visible.sync="visible"
                :title="info.name"
                center>
         <div class="container">

@@ -6,129 +6,31 @@
         <div class="tabs">
             <div class="page-container">
                 <nav>
-                    <div class="tab-item" :class="{ 'active': current === 0 }" @mouseover="current = 0">
-                        <i class="jly-data-icon">&#xe66f;</i>
-                        <span class="text">主题</span>
+                    <div class="tab-item" v-for="(nav, index) in tabs" :key="index" :class="{ 'active': current === index }" @mouseover="current = index">
+                        <i class="jly-data-icon" v-html="nav.icon"></i>
+                        <span class="text">{{ nav.name }}</span>
                     </div>
-                    <div class="tab-item" :class="{ 'active': current === 1 }" @mouseover="current = 1">
-                        <i class="jly-data-icon">&#xe60b;</i>
-                        <span class="text">行业</span>
-                    </div>
-                    <div class="tab-item" :class="{ 'active': current === 2 }" @mouseover="current = 2">
-                        <i class="jly-data-icon">&#xe72e;</i>
-                        <span class="text">服务</span>
-                    </div>
-                    <div class="tab-item" :class="{ 'active': current === 3 }" @mouseover="current = 3">
+                    <div class="tab-item" :key="tabs.length" :class="{ 'active': current === tabs.length }" @mouseover="current = tabs.length">
                         <i class="jly-data-icon">&#xe690;</i>
-                        <span class="text">部门</span>
+                        <span class="text">组织</span>
                     </div>
                 </nav>
                 <div class="content-container">
-                    <div class="content" v-show="current === 0">
+                    <div class="content" v-for="(cate, index) in tabs" :key="index" v-show="current === index">
                         <el-row>
-                            <el-col :span="4">
+                            <el-col :span="4" v-for="(child, key) in cate.children" :key="key">
                                 <div class="item">
-                                    <div class="icon"><i class="jly-data-icon">&#xe625;</i></div>
-                                    <div class="title">党建引领</div>
-                                </div>
-                            </el-col>
-                            <el-col :span="4">
-                                <div class="item">
-                                    <div class="icon"><i class="jly-data-icon">&#xe682;</i></div>
-                                    <div class="title">企业经营</div>
-                                </div>
-                            </el-col>
-                            <el-col :span="4">
-                                <div class="item">
-                                    <div class="icon"><i class="jly-data-icon">&#xe61d;</i></div>
-                                    <div class="title">转型升级</div>
+                                    <div class="icon"><i class="jly-data-icon" v-html="child.icon"></i></div>
+                                    <div class="title">{{ child.name }}</div>
                                 </div>
                             </el-col>
                         </el-row>
                     </div>
-                    <div class="content" v-show="current === 1">
-                        <el-row>
-                            <el-col :span="4">
-                                <div class="item">
-                                    <div class="icon"><i class="jly-data-icon">&#xe620;</i></div>
-                                    <div class="title">宾馆酒楼</div>
-                                </div>
-                            </el-col>
-                            <el-col :span="4">
-                                <div class="item">
-                                    <div class="icon"><i class="jly-data-icon">&#xe614;</i></div>
-                                    <div class="title">房产物业</div>
-                                </div>
-                            </el-col>
-                            <el-col :span="4">
-                                <div class="item">
-                                    <div class="icon"><i class="jly-data-icon">&#xe61c;</i></div>
-                                    <div class="title">养老</div>
-                                </div>
-                            </el-col>
-                            <el-col :span="4">
-                                <div class="item">
-                                    <div class="icon"><i class="jly-data-icon">&#xe64a;</i></div>
-                                    <div class="title">建筑物流</div>
-                                </div>
-                            </el-col>
-                            <el-col :span="4">
-                                <div class="item">
-                                    <div class="icon"><i class="jly-data-icon">&#xe695;</i></div>
-                                    <div class="title">合金型材</div>
-                                </div>
-                            </el-col>
-                            <el-col :span="4">
-                                <div class="item">
-                                    <div class="icon"><i class="jly-data-icon">&#xe648;</i></div>
-                                    <div class="title">机械设备</div>
-                                </div>
-                            </el-col>
-                        </el-row>
-                    </div>
-                    <div class="content" v-show="current === 2">
-                        <el-row>
-                            <el-col :span="4">
-                                <div class="item">
-                                    <div class="icon"><i class="jly-data-icon">&#xe665;</i></div>
-                                    <div class="title">政务</div>
-                                </div>
-                            </el-col>
-                            <el-col :span="4">
-                                <div class="item">
-                                    <div class="icon"><i class="jly-data-icon">&#xe629;</i></div>
-                                    <div class="title">安全生产</div>
-                                </div>
-                            </el-col>
-                            <el-col :span="4">
-                                <div class="item">
-                                    <div class="icon"><i class="jly-data-icon">&#xe6fa;</i></div>
-                                    <div class="title">数智化</div>
-                                </div>
-                            </el-col>
-                        </el-row>
-                    </div>
-                    <div class="content" v-show="current === 3">
-                        <el-row>
-                            <el-col :span="4">
-                                <div class="item">
-                                    <div class="icon"><i class="jly-data-icon">&#xe665;</i></div>
-                                    <div class="title">政务</div>
-                                </div>
-                            </el-col>
-                            <el-col :span="4">
-                                <div class="item">
-                                    <div class="icon"><i class="jly-data-icon">&#xe629;</i></div>
-                                    <div class="title">安全生产</div>
-                                </div>
-                            </el-col>
-                            <el-col :span="4">
-                                <div class="item">
-                                    <div class="icon"><i class="jly-data-icon">&#xe6fa;</i></div>
-                                    <div class="title">数智化</div>
-                                </div>
-                            </el-col>
-                        </el-row>
+                    <div class="loadding" v-if="loading">
+                        <div>
+                            <i class="el-icon-loading" style="font-size: 42px"></i>
+                            <p class="text">加载中...</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -152,16 +54,8 @@
         data() {
             return {
                 current: 0,
-                tabs: [
-                    { id: 0, label: "主题", icon: "&#xe66f;" },
-                    { id: 1, label: "行业", icon: "&#xe60b;" },
-                    { id: 2, label: "领域", icon: "&#xe60c;" },
-                ],
-                list: [
-                    { id: 0, label: "主题", icon: "&#xe66f;" },
-                    { id: 1, label: "行业", icon: "&#xe60b;" },
-                    { id: 2, label: "领域", icon: "&#xe60c;" },
-                ]
+                tabs: [],
+                loading: false,
             }
         },
         computed: {
@@ -169,8 +63,20 @@
                 return (this.$store.getters.system).clientHeight - 75
             }
         },
+        watch: {
+            current: {
+                handler(current) {
+                    if (current !== undefined && this.tabs[current].id > 0 && !this.tabs[current].children) {
+                        this.getCategoryByPId(current,this.tabs[current].id)
+                    }
+                },
+                immediate: false,
+            }
+        },
         created() {
-
+            this.getCategory().then(() => {
+                this.getCategoryByPId(0,this.tabs[0].id)
+            })
         },
         methods: {
             getCategory() {
@@ -180,12 +86,15 @@
                     })
                 ])
             },
-            getCategoryByPId(pid) {
+            getCategoryByPId(index,pid) {
+                this.loading = true;
                 return Promise.all([
-                    this.$api.meta.category(pid).then(({ list }) => {
-                        this.list = list
+                    this.$api.meta.getCategoryByPId(pid).then(({ list }) => {
+                        this.$set(this.tabs[index], 'children', list)
                     })
-                ])
+                ]).finally(() => {
+                    this.loading = false
+                })
             }
         }
     }
@@ -270,6 +179,23 @@
                                 color: $color-primary;
                             }
                         }
+                    }
+                }
+                .loadding{
+                    height: 100%;
+                    margin: -15px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background-color: transparentize($bg-color-grey, .5);
+                    position: relative;
+                    z-index: 10;
+                    i{
+                        color: $color-primary;
+                    }
+                    .text{
+                        line-height: 32px;
+                        color: $color-primary;
                     }
                 }
             }

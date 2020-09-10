@@ -28,7 +28,7 @@
                                 </el-submenu>
                             </template>
                             <template v-else>
-                                <el-menu-item :index="String(child.id)+'_'+String(grandson.id)" :key="grandsonIndex">{{ grandson.name }}</el-menu-item>
+                                <el-menu-item :index="String(child.id)+'_'+String(grandson.id)" :key="grandsonIndex"><i class="jly-data-icon" v-html="grandson.icon"></i>{{ grandson.name }}</el-menu-item>
                             </template>
                         </template>
                     </el-submenu>
@@ -42,6 +42,7 @@
                         <api-card @view="view" :data="api"></api-card>
                     </div>
                 </div>
+                <list-is-null v-if="list.length === 0"></list-is-null>
                 <api-info ref="info"></api-info>
             </vue-scroll>
         </el-main>
@@ -56,6 +57,7 @@ import {
 } from 'element-ui';
 import ApiCard from '@/pages/public/api-card'
 import ApiInfo from '@/pages/public/api-info'
+import ListIsNull from '@/components/list-is-null'
 export default {
     name: "catalog",
     components: {
@@ -68,6 +70,7 @@ export default {
         [MenuItem.name]: MenuItem,
         [ApiInfo.name]: ApiInfo,
         [ApiCard.name]: ApiCard,
+        [ListIsNull.name]: ListIsNull,
     },
     data() {
         return {

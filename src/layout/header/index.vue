@@ -69,11 +69,11 @@
         },
         computed: {
             activeIndex() {
-                let path = this.$route.path.split('/');
-                path.splice(0,1);
-                path.splice(path.length - 1,1);
-                path = '/' + path.join('/')
-                return path
+                // let path = this.$route.path.split('/');
+                // path.splice(0,1);
+                // path.splice(path.length - 1,1);
+                // path = '/' + path.join('/')
+                return this.$route.path
             }
         },
         created() {

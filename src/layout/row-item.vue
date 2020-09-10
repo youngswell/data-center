@@ -32,7 +32,7 @@
     @import "@/common/style/theme.scss";
     .row-item{
         display: flex;
-        line-height: 40px;
+        line-height: inherit;
         label{
             display: block;
             color: $text-color-grey;

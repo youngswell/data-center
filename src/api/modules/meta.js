@@ -18,4 +18,7 @@ export default {
     getApiInfo(id) {
         return axios.get(path + '/info/' + id)
     },
+    getApiData(id) {
+        return axios.get('/open/rest/info/' + id)
+    },
 }

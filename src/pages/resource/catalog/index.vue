@@ -1,17 +1,45 @@
 <template>
     <el-container class="catalog">
-        <el-aside width="320px" :style="{ height: height + 'px' }">
+        <el-aside width="360px" :style="{ height: height + 'px' }">
 <!--            <div class="search-box">-->
 <!--                <el-input type="text" v-model="keyword" placeholder="输入关键字以检索..." clearable></el-input>-->
 <!--            </div>-->
             <vue-scroll :ops="ops" style="background-color: #ffffff;padding: 15px 0">
-                <el-tree ref="tree"
-                         :props="treeProps"
-                         :load="loadNode"
-                         :highlight-current="true"
-                         @node-click="nodeClick"
-                         lazy>
-                </el-tree>
+<!--                <el-tree ref="tree"-->
+<!--                         :props="treeProps"-->
+<!--                         :load="loadNode"-->
+<!--                         :highlight-current="true"-->
+<!--                         @node-click="nodeClick"-->
+<!--                         lazy>-->
+<!--                </el-tree>-->
+                <div class="all" :class="{ 'active': !$route.params.id }" @click="$router.replace({params: { id: 0}})"><i class="el-icon-menu"></i>&nbsp;所有</div>
+                <el-menu :default-active="String($route.params.id)"
+                         :router="false"
+                         active-text-color="#286fa7"
+                         @select="selectCategory">
+                    <el-submenu :index="String(childIndex)" v-for="(child, childIndex) in menus" :key="childIndex">
+                        <template slot="title">
+                            <i class="jly-data-icon" v-html="child.icon"></i>
+                            <span>{{ child.name }}</span>
+                        </template>
+                        <template v-for="(grandson, grandsonIndex) in child.children">
+                            <template v-if="grandson.children">
+                                <el-submenu :index="String(child.id)+'_'+String(grandson.id)" :key="grandsonIndex">
+                                    <template slot="title">{{ grandson.label }}</template>
+                                    <el-menu-item :index="String(child.id)+'_'+String(grandson.id)+'_'+String(greatGrandson.id)"
+                                                  v-for="(greatGrandson, greatGrandsonIndex) in grandson.children"
+                                                  :key="greatGrandsonIndex">
+                                        <i class="jly-data-icon" v-html="greatGrandson.icon"></i>
+                                        <span>{{ greatGrandson.name }}</span>
+                                    </el-menu-item>
+                                </el-submenu>
+                            </template>
+                            <template v-else>
+                                <el-menu-item :index="String(grandson.id)" :key="grandsonIndex"><i class="jly-data-icon" v-html="grandson.icon"></i>{{ grandson.name }}</el-menu-item>
+                            </template>
+                        </template>
+                    </el-submenu>
+                </el-menu>
             </vue-scroll>
         </el-aside>
         <el-main :style="{ height: height + 'px' }">
@@ -55,6 +83,9 @@ export default {
     },
     data() {
         return {
+            menus: [
+                { name: '贵州铝厂有限责任公司', children: [] }
+            ],
             list: [],
             keyword: "",
             current: '',
@@ -76,10 +107,21 @@ export default {
         },
     },
     watch: {
-
+        $route: {
+            handler($route) {
+                this.getApiList($route.params.id)
+            },
+            immediate: true,
+            deep: true,
+        }
     },
     mounted() {
-        this.getApiList()
+        this.$api.unit.getUnit().then(({ list }) => {
+            list.forEach(item => {
+                item.isLeaf = typeof item.isLeaf === 'undefined' ? true : item.isLeaf
+            })
+            this.menus[0].children = list
+        })
     },
     methods: {
         getApiList(id) {
@@ -100,9 +142,10 @@ export default {
                 resolve(list);
             })
         },
-        nodeClick(e) {
-            console.log(e)
-            this.getApiList(e.id)
+        selectCategory(id) {
+            this.$router.replace({
+                params: { id}
+            })
         },
         view(id) {
             const loading = this.$loading('加载中...');
@@ -132,6 +175,18 @@ export default {
             }
             vue-scroll{
                 flex: 1;
+            }
+            .all{
+                line-height: 50px;
+                padding-left: 20px;
+                font-size: $font-size-base;
+                cursor: pointer;
+                &:hover{
+                    background-color: #eaf1f6;
+                }
+                &.active{
+                    color: $color-primary;
+                }
             }
         }
         main{

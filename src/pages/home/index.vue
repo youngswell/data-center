@@ -19,10 +19,20 @@
                     <div class="content" v-for="(cate, index) in tabs" :key="index" v-show="current === index">
                         <el-row>
                             <el-col :span="4" v-for="(child, key) in cate.children" :key="key">
-                                <div class="item">
+                                <router-link class="item" :to="{ name: 'resource-interface', params: { id: child.id, pid: child.parentId } }">
                                     <div class="icon"><i class="jly-data-icon" v-html="child.icon"></i></div>
                                     <div class="title">{{ child.name }}</div>
-                                </div>
+                                </router-link>
+                            </el-col>
+                        </el-row>
+                    </div>
+                    <div class="content" :key="tabs.length" v-show="current === tabs.length">
+                        <el-row>
+                            <el-col :span="6" v-for="(child, key) in cates" :key="key">
+                                <router-link class="organization" :to="{ name: 'resource-catalog', params: { id: child.id } }">
+                                    <span class="icon"><i class="jly-data-icon">&#xe61f;</i></span>
+                                    <span class="title">{{ child.name }}</span>
+                                </router-link>
                             </el-col>
                         </el-row>
                     </div>
@@ -55,6 +65,7 @@
             return {
                 current: 0,
                 tabs: [],
+                cates: [],
                 loading: false,
             }
         },
@@ -66,7 +77,7 @@
         watch: {
             current: {
                 handler(current) {
-                    if (current !== undefined && this.tabs[current].id > 0 && !this.tabs[current].children) {
+                    if (current !== undefined && current < this.tabs.length && this.tabs[current].id > 0 && !this.tabs[current].children) {
                         this.getCategoryByPId(current,this.tabs[current].id)
                     }
                 },
@@ -76,6 +87,9 @@
         created() {
             this.getCategory().then(() => {
                 this.getCategoryByPId(0,this.tabs[0].id)
+            })
+            this.$api.unit.getUnit().then(({ list }) => {
+                this.cates = list;
             })
         },
         methods: {
@@ -172,6 +186,27 @@
                         }
                         &:hover{
                             /*<!--border-color: $color-primary;-->*/
+                            i{
+                                color: $color-primary;
+                            }
+                            .title{
+                                color: $color-primary;
+                            }
+                        }
+                    }
+                    .organization{
+                        transition: all .3s;
+                        cursor: pointer;
+                        .title{
+                            line-height: 32px;
+                            font-size: $font-size-base;
+                            transition: all .3s;
+                            color: $text-color-title;
+                        }
+                        i{
+                            margin-right: 5px;
+                        }
+                        &:hover{
                             i{
                                 color: $color-primary;
                             }

@@ -5,7 +5,7 @@
 <!--                <el-input type="text" v-model="keyword" placeholder="输入关键字以检索..." clearable></el-input>-->
 <!--            </div>-->
             <vue-scroll :ops="ops" style="background-color: #ffffff">
-                <el-menu default-active=""
+                <el-menu :default-active="$route.params.pid + '_' + $route.params.id"
                          :router="false"
                          active-text-color="#286fa7"
                          @select="selectCategory"
@@ -90,21 +90,25 @@ export default {
         },
     },
     watch: {
-        defaultActiveId: {
-            handler(id) {
-                // console.log(id)
-                this.list = this.getApiList(id)
+        $route: {
+            handler($route) {
+                this.getApiList($route.params.pid, $route.params.id)
             },
-            immediate: true
+            immediate: true,
+            deep: true,
         }
     },
     mounted() {
         this.getApiList();
-        this.getCategory()
+        this.getCategory().then(() => {
+            for (let i in this.menus) {
+                this.menuOpen(i)
+            }
+        })
     },
     methods: {
-        getApiList(id,cid) {
-            const params = id ? { categoryPid: id, categoryId: cid } : {};
+        getApiList(pid,id) {
+            const params = id ? { categoryPid: pid, categoryId: id } : {};
             const loading = this.$loading('加载中...');
             this.$api.meta.getApiListByCategoryId(params).then(({ list }) => {
                 this.list = list
@@ -113,12 +117,17 @@ export default {
             })
         },
         getCategory() {
-            this.$api.meta.category().then(({ list }) => {
-                this.menus = list
-            })
+            return Promise.all([
+                this.$api.meta.category().then(({ list }) => {
+                    this.menus = list
+                })
+            ])
         },
-        selectCategory(id) {
-            this.getApiList(...id.split('_'))
+        selectCategory(index) {
+            const [pid, id] = index.split('_');
+            this.$router.replace({
+                params: { pid, id}
+            })
         },
         menuOpen(index) {
             if (!this.menus[index].children) {

@@ -9,10 +9,14 @@ export default {
     children: [
         {
             path: '/resource',
-            redirect: '/resource/catalog',
+            redirect: '/resource/catalog/0',
         },
         {
             path: '/resource/catalog',
+            redirect: '/resource/catalog/0',
+        },
+        {
+            path: '/resource/catalog/:id',
             name: 'resource-catalog',
             meta: {
                 title: '数据分类',
@@ -22,6 +26,10 @@ export default {
         },
         {
             path: '/resource/interface',
+            redirect: '/resource/interface/0/0',
+        },
+        {
+            path: '/resource/interface/:pid/:id',
             name: 'resource-interface',
             meta: {
                 title: 'API',

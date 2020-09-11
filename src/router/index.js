@@ -11,6 +11,10 @@ Router.prototype.push = function push(location) {
     return originalPush.call(this, location).catch(err => err)
 }
 
+const originalReplace = Router.prototype.replace
+Router.prototype.replace = function push(location) {
+    return originalReplace.call(this, location).catch(err => err)
+}
 // console.log(list)
 const router = new Router({
     mode: "history",

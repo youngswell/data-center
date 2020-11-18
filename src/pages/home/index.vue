@@ -1,10 +1,101 @@
 <template>
     <div class="page" :style="{height: height + 'px'}">
-        <div class="page-container">
-            <div class="sub-bar"></div>
+        <div class="sub-bar">
+            <div class="page-container">
+                <el-tabs tab-position="left" style="">
+                    <el-tab-pane label="关键字搜索">
+                        <el-input v-model="filter.keyword" placeholder="请输入您要搜索的内容" style="width: 420px">
+                            <el-button slot="append" icon="el-icon-search"></el-button>
+                        </el-input>
+                    </el-tab-pane>
+                    <el-tab-pane label="元数据搜索">
+                        <el-form style="" label-width="80px">
+                            <el-row :gutter="20">
+                                <el-col :span="18">
+                                    <el-form-item label="名称">
+                                        <el-input v-model="filter.name" placeholder="请输入资源名称" style=""></el-input>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
+                            <el-row :gutter="20">
+                                <el-col :span="9">
+                                    <el-form-item label="关键字">
+                                        <el-input v-model="filter.keyword" placeholder="请输入资源关键字" style=""></el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="9">
+                                    <el-form-item label="摘要">
+                                        <el-input v-model="filter.keyword" placeholder="请输入资源摘要" style=""></el-input>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
+                            <el-row :gutter="20">
+                                <el-col :span="6">
+                                    <el-form-item label="主题分类">
+                                        <el-select v-model="filter.keyword" placeholder="请选择主题分类" style="">
+                                            <el-option :label="0">请选择</el-option>
+                                        </el-select>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="6">
+                                    <el-form-item label="行业分类">
+                                        <el-select v-model="filter.keyword" placeholder="请选择行业分类" style="">
+                                            <el-option :label="0">请选择</el-option>
+                                        </el-select>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="6">
+                                    <el-form-item label="服务分类">
+                                        <el-select v-model="filter.keyword" placeholder="请选择服务分类" style="">
+                                            <el-option :label="0">请选择</el-option>
+                                        </el-select>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="6">
+                                    <el-form-item label="组织">
+                                        <el-select v-model="filter.keyword" placeholder="请选择组织" style="">
+                                            <el-option :label="0">请选择</el-option>
+                                        </el-select>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
+                            <el-row :gutter="20">
+                                <el-col :span="6">
+                                    <el-form-item label="数据格式">
+                                        <el-select v-model="filter.keyword" placeholder="请选择数据格式" style="">
+                                            <el-option :label="0">请选择</el-option>
+                                        </el-select>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="6">
+                                    <el-form-item label="更新频率">
+                                        <el-select v-model="filter.keyword" placeholder="请选择更新频率" style="">
+                                            <el-option :label="0">请选择</el-option>
+                                        </el-select>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="12">
+                                    <el-form-item label="发布日期">
+                                        <el-date-picker v-model="filter.keyword" type="date" placeholder="选择日期"></el-date-picker>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
+                            <el-row :gutter="20">
+                                <el-col :span="6">
+                                    <el-form-item label="下架日期">
+                                        <el-date-picker v-model="filter.keyword" type="date" placeholder="选择日期"></el-date-picker>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
+                        </el-form>
+                    </el-tab-pane>
+                </el-tabs>
+            </div>
         </div>
         <div class="tabs">
             <div class="page-container">
+                <div class="title">数据分类</div>
+                <div class="divider">DATA CLASSIFICATION</div>
                 <nav>
                     <div class="tab-item" v-for="(nav, index) in tabs" :key="index" :class="{ 'active': current === index }" @mouseover="current = index">
                         <i class="jly-data-icon" v-html="nav.icon"></i>
@@ -52,6 +143,9 @@
 <script>
     import {
         Row, Col,
+        Tabs, TabPane,
+        Form, FormItem,
+        Input, Button, Select, Option, DatePicker,
     } from 'element-ui'
     import Footer from "./footer"
     export default {
@@ -59,7 +153,16 @@
         components: {
             [Row.name]: Row,
             [Col.name]: Col,
+            [Tabs.name]: Tabs,
+            [TabPane.name]: TabPane,
             [Footer.name]: Footer,
+            [Form.name]: Form,
+            [FormItem.name]: FormItem,
+            [Input.name]: Input,
+            [Button.name]: Button,
+            [Select.name]: Select,
+            [Option.name]: Option,
+            [DatePicker.name]: DatePicker,
         },
         data() {
             return {
@@ -67,6 +170,9 @@
                 tabs: [],
                 cates: [],
                 loading: false,
+                filter: {
+                    keyword: ''
+                }
             }
         },
         computed: {
@@ -127,6 +233,37 @@
         .tabs{
             flex: 1;
             padding: 0 0 $space-row-base;
+            .page-container{
+                // background-color: $bg-color;
+            }
+            .title{
+                font-size: $font-size-lg;
+                color: $text-color-title;
+                line-height: 40px;
+                text-align: center;
+            }
+            .divider{
+                display: flex;
+                height: 40px;
+                align-items: center;
+            }
+            .divider::before{
+                content: '';
+                display: block;
+                flex: 1;
+                height: 1px;
+                background-color: $border-color;
+                margin-right: 15px;
+            }
+            .divider::after{
+                content: '';
+                display: block;
+                flex: 1;
+                height: 1px;
+                background-color: $border-color;
+                margin-left: 15px;
+
+            }
             nav{
                 height: 60px;
                 line-height: 60px;

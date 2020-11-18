@@ -84,7 +84,7 @@ export default {
     data() {
         return {
             menus: [
-                { name: '贵州铝厂有限责任公司', children: [] }
+                { name: '贵阳经济技术开发区', children: [] }
             ],
             list: [],
             keyword: "",

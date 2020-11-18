@@ -22,7 +22,7 @@ const router = new Router({
         {
             path: '/',
             meta: {
-                title: "贵铝数据开放平台"
+                title: "贵阳经济技术开发区农房确权数据资源"
             },
             component: () => import("@/layout"),
             children: [

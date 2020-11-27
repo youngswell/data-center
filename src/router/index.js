@@ -15,7 +15,7 @@ const originalReplace = Router.prototype.replace
 Router.prototype.replace = function push(location) {
     return originalReplace.call(this, location).catch(err => err)
 }
-// console.log(list)
+console.log(routers)
 const router = new Router({
     mode: "history",
     routes: [

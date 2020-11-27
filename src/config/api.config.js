@@ -10,7 +10,7 @@ import store from '@/store';
 // import router from './router.config';
 import { MessageBox, Message } from 'element-ui';
 
-axios.defaults.baseURL = '/api/';
+axios.defaults.baseURL = 'http://122.9.142.211:8083/api/';
 axios.defaults.timeout = 10000;
 
 // 添加请求拦截器

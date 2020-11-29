@@ -34,6 +34,14 @@ const router = new Router({
             ]
         },
         {
+            name: "levy",
+            path: "/levy",
+            meta: {
+                title: "贵阳经济技术开发区农房确权数据检索"
+            },
+            component: () => import("@/pages/levy"),
+        },
+        {
             path: "/error",
             meta: {
                 title: "404找不到页面"

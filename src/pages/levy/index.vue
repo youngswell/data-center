@@ -5,7 +5,7 @@
         <el-tab-pane label="项目检索">
           <el-row :gutter="20">
             <el-col :span="6">
-              <row-item label="项目ID" show-colon>
+              <row-item label="项目名称" show-colon>
                 <el-select v-model="filter.projectid" placeholder="请选择项目" style="width: 100%" filterable clearable>
                   <el-option v-for="(item, index) in projects"
                              :key="index"

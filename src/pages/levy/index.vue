@@ -1,46 +1,81 @@
 <template>
-  <layout class="page">
+  <layout class="page" :options="{scrollPanel: {initialScrollX: true}}">
     <div class="header" slot="header">
-      <div class="left">
-        <row-item label="项目ID" show-colon>
-          <el-select v-model="filter.projectid" placeholder="请选择项目" style="width: 100%" filterable clearable>
-            <el-option v-for="(item, index) in projects"
-                       :key="index"
-                       :label="item.name + '（' + item.type + '）'"
-                       :value="item.id">
-            </el-option>
-          </el-select>
-        </row-item>
-        <row-item label="身份证号" show-colon><el-input class="filter-item" v-model="filter.code" placeholder="请输入身份证号" clearable></el-input></row-item>
-        <row-item label="姓名" show-colon><el-input class="filter-item" v-model="filter.name" placeholder="请输入姓名" clearable></el-input></row-item>
-        <row-item label="件袋号" show-colon><el-input class="filter-item" v-model="filter.jdh" placeholder="请输入件袋号" clearable></el-input></row-item>
-        <row-item label="住宅地址" show-colon><el-input class="filter-item" v-model="filter.address" placeholder="请输入住宅地址" clearable></el-input></row-item>
-      </div>
-      <div class="right">
-        <el-button type="default" @click="reset">重置</el-button>
-        <el-button type="primary" @click="toFilter">检索</el-button>
-      </div>
+      <el-tabs tab-position="left" style="" @tab-click="reset">
+        <el-tab-pane label="项目检索">
+          <el-row :gutter="20">
+            <el-col :span="6">
+              <row-item label="项目ID" show-colon>
+                <el-select v-model="filter.projectid" placeholder="请选择项目" style="width: 100%" filterable clearable>
+                  <el-option v-for="(item, index) in projects"
+                             :key="index"
+                             :label="item.name + '（' + item.type + '）'"
+                             :value="item.id">
+                  </el-option>
+                </el-select>
+              </row-item>
+            </el-col>
+            <el-col :span="6">
+              <row-item label="身份证号" show-colon><el-input class="filter-item" v-model="filter.code" placeholder="请输入身份证号" clearable></el-input></row-item>
+            </el-col>
+            <el-col :span="6">
+              <row-item label="姓名" show-colon><el-input class="filter-item" v-model="filter.name" placeholder="请输入姓名" clearable></el-input></row-item>
+            </el-col>
+            <el-col :span="6">
+              <row-item label="件袋号" show-colon><el-input class="filter-item" v-model="filter.jdh" placeholder="请输入件袋号" clearable></el-input></row-item>
+            </el-col>
+            <el-col :span="6">
+              <row-item label="住宅地址" show-colon><el-input class="filter-item" v-model="filter.address" placeholder="请输入住宅地址" clearable></el-input></row-item>
+            </el-col>
+            <el-col :span="6">
+              <el-button type="default" @click="reset">重置</el-button>
+              <el-button type="primary" @click="toFilter">检索</el-button>
+            </el-col>
+          </el-row>
+        </el-tab-pane>
+        <el-tab-pane label="精确检索">
+          <el-row :gutter="20">
+            <el-col :span="6">
+              <row-item label="身份证号" show-colon><el-input class="filter-item" v-model="filter.code" placeholder="请输入身份证号" clearable></el-input></row-item>
+            </el-col>
+            <el-col :span="6">
+              <row-item label="姓名" show-colon><el-input class="filter-item" v-model="filter.name" placeholder="请输入姓名" clearable></el-input></row-item>
+            </el-col>
+            <el-col :span="6">
+              <row-item label="件袋号" show-colon><el-input class="filter-item" v-model="filter.jdh" placeholder="请输入件袋号" clearable></el-input></row-item>
+            </el-col>
+            <el-col :span="6">
+              <el-button type="default" @click="reset">重置</el-button>
+              <el-button type="primary" @click="toFilter">检索</el-button>
+            </el-col>
+          </el-row>
+        </el-tab-pane>
+      </el-tabs>
     </div>
     <div class="main" slot="page">
-      <el-table :data="list" style="width: 100%;">
-        <el-table-column label="序号" type="index" min-width="40"></el-table-column>
-        <el-table-column prop="jdh" label="件袋号" min-width="60"></el-table-column>
-        <el-table-column prop="username" label="被征收人姓名" min-width="60"></el-table-column>
-        <el-table-column prop="idCard" label="身份证" min-width="80"></el-table-column>
-        <el-table-column prop="phone" label="联系方式" min-width="40"></el-table-column>
-        <el-table-column prop="contractNO" label="合同编号" min-width="40"></el-table-column>
-        <el-table-column prop="contractDate" label="签约日期" min-width="60"></el-table-column>
-        <el-table-column prop="movingDate" label="搬迁日期" min-width="60"></el-table-column>
-        <el-table-column prop="address" label="地址" min-width="80"></el-table-column>
-        <el-table-column prop="structure" label="建筑类型" min-width="40"></el-table-column>
-        <el-table-column prop="usage" label="用途" min-width="40"></el-table-column>
+      <el-table :data="list" style="width: 100%">
+        <el-table-column label="序号" type="index" width="60"></el-table-column>
+        <el-table-column prop="jdh" label="件袋号" width="80"></el-table-column>
+        <el-table-column prop="username" label="被征收人姓名" width="120"></el-table-column>
+        <el-table-column prop="idCard" label="身份证" width="120" ></el-table-column>
+        <el-table-column prop="projectid" label="项目ID" width="80"></el-table-column>
+        <el-table-column prop="projectname" label="项目名称" width="120"></el-table-column>
+        <el-table-column prop="structure" label="建筑类型" width="80"></el-table-column>
+        <el-table-column prop="authArea" label="确权面积" width="80"></el-table-column>
 
-        <el-table-column prop="area" label="建筑面积（平方米）" min-width="60"></el-table-column>
-        <el-table-column prop="legalArea" label="合法面积" min-width="60"></el-table-column>
-        <el-table-column prop="provedArea" label="有证面积" min-width="60"></el-table-column>
-        <el-table-column prop="authArea" label="确权面积" min-width="60"></el-table-column>
+        <el-table-column prop="contractNO" label="合同编号" min-width="50"></el-table-column>
+        <el-table-column prop="contractDate" label="签约日期" min-width="60"></el-table-column>
+
+        <el-table-column prop="address" label="地址" min-width="80"></el-table-column>
+        <el-table-column prop="phone" label="联系方式" min-width="80"></el-table-column>
+
+        <el-table-column prop="movingDate" label="搬迁日期" min-width="60"></el-table-column>
+        <el-table-column prop="area" label="建筑面积（平方米）" min-width="100"></el-table-column>
+        <el-table-column prop="legalArea" label="合法面积" min-width="50"></el-table-column>
+        <el-table-column prop="provedArea" label="有证面积" min-width="50"></el-table-column>
+        <el-table-column prop="usage" label="用途" min-width="40"></el-table-column>
         <el-table-column prop="beChanged" label="住改非" min-width="40"></el-table-column>
-        <el-table-column prop="unPovedArea" label="无证面积" min-width="60"></el-table-column>
+        <el-table-column prop="unPovedArea" label="无证面积" min-width="50"></el-table-column>
       </el-table>
       <div class="footer">
         <el-pagination
@@ -78,6 +113,7 @@ import {
   Table, TableColumn,
   Pagination,
   Dialog,
+  Tabs, TabPane,
 } from 'element-ui';
 import $loading from "@/utils/loading";
 export default {
@@ -94,6 +130,8 @@ export default {
     [TableColumn.name]: TableColumn,
     [Pagination.name]: Pagination,
     [Dialog.name]: Dialog,
+    [Tabs.name]: Tabs,
+    [TabPane.name]: TabPane,
     [Layout.name]: Layout,
     [RowItem.name]: RowItem,
   },
@@ -211,7 +249,7 @@ export default {
         if (token) {
           this.$store.commit("user", { id: 0, real_name: 'Admin'});
           this.$store.commit("token", token);
-          this.$message.success('登录成功！')
+          // this.$message.success('登录成功！')
         }
       }).catch(() => {
         loading.close()
@@ -225,22 +263,12 @@ export default {
 @import "@/common/style/theme.scss";
 .page{
   .header{
-    padding: 0 $space-col-base;
+    padding: 10px $space-col-base;
     line-height: 60px;
     background-color: $bg-color;
-    display: flex;
-    .left{
+    /*display: flex;*/
+    .row-item{
       flex: 1;
-      display: flex;
-      .row-item{
-        flex: 1;
-        .filter-item{
-
-        }
-      }
-    }
-    .right{
-      margin-left: $space-col-base;
     }
   }
 }

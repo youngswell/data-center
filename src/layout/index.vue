@@ -28,6 +28,9 @@
         components: {
             [layoutHeader.name]: layoutHeader,
         },
+        props: {
+            options: Object,
+        },
         data() {
             return {
                 ops: {
